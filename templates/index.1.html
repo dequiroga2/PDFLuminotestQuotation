@@ -264,10 +264,11 @@
       <div class="infoRow"><div class="lbl"></div><div class="val"></div></div>
     </div>
 
-    <div class="para"><b>Respetado(s) señor(es):</b> {{ORGANIZACION}}</div>
+    <div class="para"><b>Respetado(s) señor(es):</b> {{FIRSTNAME}} {{LASTNAME}}</div>
     <div class="para">
       Para nosotros es un gusto presentar la siguiente cotización de servicios. A continuación se relacionan los ensayos solicitados y sus valores asociados.
     </div>
+    <div class="para"><b>Proceso:</b></div>
 
     <div style="border:1px solid #c9cfd6;">
     <div style="
@@ -302,13 +303,18 @@
     </div>
 
 
-    <div class="totalsWrap">
-      <table class="totals">
-        <tr><td class="lbl2">Subtotal: $</td><td class="right">{{SUBTOTAL}}</td></tr>
-        <tr><td class="lbl2">Descuento: $</td><td class="right">{{DESCUENTO}}</td></tr>
-        <tr><td class="lbl2">IVA 19%:</td><td class="right">{{IVA}}</td></tr>
-        <tr><td class="lbl2">Total: $</td><td class="right"><b>{{TOTAL}}</b></td></tr>
-      </table>
+    <div style="margin-top: 10px; display:flex; justify-content:space-between; break-inside: avoid; page-break-inside: avoid;">
+      <div style="flex:1; padding-right: 20px;">
+        {{EXTRA_TEXT}}
+      </div>
+      <div>
+        <table class="totals">
+          <tr><td class="lbl2">Subtotal: $</td><td class="right">{{SUBTOTAL}}</td></tr>
+          <tr><td class="lbl2">Descuento: $</td><td class="right">{{DESCUENTO}}</td></tr>
+          <tr><td class="lbl2">IVA 19%:</td><td class="right">{{IVA}}</td></tr>
+          <tr><td class="lbl2">Total: $</td><td class="right"><b>{{TOTAL}}</b></td></tr>
+        </table>
+      </div>
     </div>
 
     <div style="padding:0; border:none;">

@@ -153,6 +153,8 @@ app.post("/pdf/cotizacion", requireKey, async (req, res) => {
     const cotLabel = cotNumber.startsWith("COT-") ? cotNumber : `COT-${cotNumber}`;
 
     const organizacion = data.organizacion ?? data.organization ?? "";
+    const firstname = data.firstname ?? data.firstName ?? "";
+    const lastname = data.lastname ?? data.lastName ?? "";
     const email = data.email ?? "";
     const direccion = data.direccion ?? data.address ?? "";
     const telefono = data.telefono ?? data.phone ?? "";
@@ -166,6 +168,7 @@ app.post("/pdf/cotizacion", requireKey, async (req, res) => {
 
     const acrInfo = data.acrInfo ?? "Aplica según el alcance del ensayo.";
     const observaciones = data.observaciones ?? "Ninguna.";
+    const extraText = data.extraText ?? "";
 
     const items = Array.isArray(data.items) ? data.items : [];
 
@@ -188,6 +191,8 @@ app.post("/pdf/cotizacion", requireKey, async (req, res) => {
       .replaceAll("{{COT_LABEL}}", escapeHtml(cotLabel))
       .replaceAll("{{FECHA_HOY}}", escapeHtml(todayDDMMYYYY()))
       .replaceAll("{{ORGANIZACION}}", escapeHtml(organizacion))
+      .replaceAll("{{FIRSTNAME}}", escapeHtml(firstname))
+      .replaceAll("{{LASTNAME}}", escapeHtml(lastname))
       .replaceAll("{{EMAIL}}", escapeHtml(email))
       .replaceAll("{{DIRECCION}}", escapeHtml(direccion))
       .replaceAll("{{TELEFONO}}", escapeHtml(telefono))
@@ -200,6 +205,7 @@ app.post("/pdf/cotizacion", requireKey, async (req, res) => {
       .replaceAll("{{MONEDA}}", escapeHtml(moneda))
       .replaceAll("{{ACR_INFO}}", escapeHtml(acrInfo))
       .replaceAll("{{OBSERVACIONES}}", escapeHtml(observaciones))
+      .replaceAll("{{EXTRA_TEXT}}", escapeHtml(extraText))
       .replaceAll("{{FOOTER_LEFT}}", escapeHtml(data.footerLeft ?? ""))
       .replaceAll("{{FOOTER_RIGHT}}", escapeHtml(data.footerRight ?? ""))
       .replaceAll("{{COMPANY_TOP}}", escapeHtml(companyTop))
