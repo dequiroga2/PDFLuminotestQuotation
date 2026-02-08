@@ -1,0 +1,323 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <title>{{COT_LABEL}}</title>
+  <style>
+    @page { size: letter; margin: 0; }
+    body { margin:0; font-family: Arial, Helvetica, sans-serif; color:#111; }
+
+    /* ====== Header superior (fuera del recuadro) ====== */
+    .pageHeader{
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      height: 86px;
+      padding: 18px 18px 0 18px;
+      box-sizing: border-box;
+      background: #fff;
+    }
+    .phTop{
+      font-size: 10px;
+      color:#333;
+      letter-spacing: .2px;
+    }
+    .phMid{
+      margin-top: 14px;
+      display:flex;
+      justify-content: space-between;
+      align-items: baseline;
+    }
+    .phCot{
+      font-size: 18px;
+      font-weight: 700;
+    }
+    .phDoc{
+      font-size: 10px;
+      color:#333;
+      font-weight: 600;
+    }
+    .phRule{
+      margin-top: 8px;
+      height: 1px;
+      background: #000;
+      opacity: .6;
+    }
+
+    /* ====== Marco que encierra TODO el contenido ====== */
+    .frameBorder{
+      position: fixed;
+      left: 18px; right: 18px;
+      top: 96px;
+      bottom: 54px; /* deja espacio para footer */
+      border: 1px solid #b9c0c7;
+      background: transparent;
+    }
+
+    /* Línea arriba del footer (como el original) */
+    .footerRule{
+      position: fixed;
+      left: 18px; right: 18px;
+      bottom: 44px;
+      height: 1px;
+      background:#000;
+      opacity:.55;
+    }
+
+    /* ====== Letterhead dentro del marco (se repite) ====== */
+    .letterhead{
+      position: fixed;
+      left: 28px; right: 28px;
+      top: 108px;  /* dentro del marco */
+      height: 102px;
+      box-sizing: border-box;
+    }
+
+    /* Banner “3 colores” más parecido */
+    .banner{
+      height: 26px;
+      border: 1px solid #c9cfd6;
+      background: #bfe8f8; /* base clara */
+      position: relative;
+      overflow: hidden;
+    }
+    /* bloque medio (diagonal) */
+    .banner:before{
+      content:"";
+      position:absolute;
+      left: -70px; top: -40px;
+      width: 260px; height: 120px;
+      background:#79c9ee; /* medio */
+      transform: skewX(-28deg);
+      opacity:.95;
+    }
+    /* bloque oscuro (diagonal más delgado) */
+    .banner .bLeftSlim{
+      position:absolute;
+      left: 80px; top: -55px;
+      width: 80px; height: 160px;
+      background:#2aaee6; /* más oscuro */
+      transform: skewX(-28deg);
+      opacity:.9;
+    }
+    /* gran bloque derecho oscuro */
+    .banner .bRight{
+      position:absolute;
+      right: -80px; top: -40px;
+      width: 420px; height: 120px;
+      background:#05aee6; /* oscuro */
+      transform: skewX(-28deg);
+      opacity:.98;
+    }
+    /* pequeño bloque claro al extremo derecho */
+    .banner .bRightLight{
+      position:absolute;
+      right: -15px; top: -55px;
+      width: 90px; height: 160px;
+      background:#bfe8f8;
+      transform: skewX(-28deg);
+      opacity:1;
+    }
+
+    .logoRow{
+        border: none;
+        display:flex;
+        align-items:center;
+        justify-content: space-between;
+        padding: 10px 12px;
+        box-sizing: border-box;
+        background:#fff;
+        height: 54px;
+        }
+
+    .logoSvg { height: 40px; width: auto; }
+    .cotInside { font-size: 12px; font-weight: 700; color:#333; }
+
+    .titleRow{
+      margin-top: 6px;
+      display:flex;
+      align-items: baseline;
+      justify-content: space-between;
+      padding: 0 2px;
+    }
+    .titleRow .title{
+      width: 100%;
+      text-align:center;
+      font-weight: 700;
+      font-size: 12px;
+      letter-spacing: .2px;
+    }
+    .titleRow .date{
+      position: absolute;
+      right: 28px;
+      font-size: 11px;
+    }
+
+    /* ====== Contenido (debajo del letterhead) ====== */
+    .content{
+      padding: 220px 28px 70px 28px; /* deja espacio arriba y abajo */
+      box-sizing: border-box;
+      font-size: 11px;
+    }
+
+    .infoBox{
+      border: 1px solid #c9cfd6;
+      padding: 8px 10px;
+      display:grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 6px 18px;
+      margin: 10px 0 10px;
+    }
+    .infoRow { display:flex; gap:8px; }
+    .lbl { width: 90px; font-weight:700; color:#333; }
+    .val { color:#111; }
+
+    .para { margin: 6px 0; line-height: 1.35; }
+
+    .sectionTitle{
+      margin: 12px 0 6px;
+      font-weight:700;
+      background:#e9ecef;
+      border: 1px solid #c9cfd6;
+      padding: 6px 8px;
+    }
+
+    table { width:100%; border-collapse:collapse; }
+    tbody tr:nth-child(odd) { background: #f2f2f2; }
+    tbody tr:nth-child(even) { background: #ffffff; }
+
+    th, td { border:1px solid #c9cfd6; padding: 6px 6px; vertical-align:top; }
+    th { background:#e9ecef; font-weight:700; font-size:10.5px; }
+    td { font-size:10.5px; }
+    .center { text-align:center; }
+    .right { text-align:right; }
+
+    /* Paginación: header de tabla repetido + no romper filas */
+    thead { display: table-header-group; }
+    tr { break-inside: avoid; page-break-inside: avoid; }
+
+    .totalsWrap{
+      margin-top: 10px;
+      display:flex;
+      justify-content:flex-end;
+      break-inside: avoid;
+      page-break-inside: avoid;
+    }
+    .totals{
+      width: 320px;
+      border: 1px solid #c9cfd6;
+      border-collapse:collapse;
+    }
+    .totals td{
+      border: 1px solid #c9cfd6;
+      padding: 6px 8px;
+      font-size: 11px;
+    }
+    .totals .lbl2 { font-weight:700; background:#f3f5f7; }
+    .avoidBreak { break-inside: avoid; page-break-inside: avoid; }
+  </style>
+</head>
+
+<body>
+
+  <!-- HEADER SUPERIOR -->
+  <div class="pageHeader">
+    <div class="phTop">{{COMPANY_TOP}}</div>
+    <div class="phMid">
+      <div class="phCot">{{COT_LABEL}}</div>
+      <div class="phDoc">{{DOC_CODE}}</div>
+    </div>
+    <div class="phRule"></div>
+  </div>
+
+  <!-- MARCO -->
+  <div class="frameBorder"></div>
+  <div class="footerRule"></div>
+
+  <!-- LETTERHEAD DENTRO DEL MARCO -->
+  <div class="letterhead">
+    <div class="banner">
+      <div class="bLeftSlim"></div>
+      <div class="bRight"></div>
+      <div class="bRightLight"></div>
+    </div>
+    <div class="logoRow">
+      <img class="logoSvg" src="{{LOGO_DATA_URI}}" alt="Luminotest" />
+      <div class="cotInside">{{COT_LABEL}}</div>
+    </div>
+    <div class="titleRow">
+      <div class="title">COTIZACIÓN DE SERVICIOS</div>
+      <div class="date"><b>Fecha:</b> {{FECHA_HOY}}</div>
+    </div>
+  </div>
+
+  <!-- CONTENIDO -->
+  <div class="content">
+
+    <div class="infoBox">
+      <div class="infoRow"><div class="lbl">Organización:</div><div class="val">{{ORGANIZACION}}</div></div>
+      <div class="infoRow"><div class="lbl">Email:</div><div class="val">{{EMAIL}}</div></div>
+
+      <div class="infoRow"><div class="lbl">Dirección:</div><div class="val">{{DIRECCION}}</div></div>
+      <div class="infoRow"><div class="lbl">Teléfono:</div><div class="val">{{TELEFONO}}</div></div>
+
+      <div class="infoRow"><div class="lbl">Ciudad:</div><div class="val">{{CIUDAD}}</div></div>
+      <div class="infoRow"><div class="lbl"></div><div class="val"></div></div>
+    </div>
+
+    <div class="para"><b>Respetado(s) señor(es):</b> {{ORGANIZACION}}</div>
+    <div class="para">
+      Para nosotros es un gusto presentar la siguiente cotización de servicios. A continuación se relacionan los ensayos solicitados y sus valores asociados.
+    </div>
+
+    <div style="border:1px solid #c9cfd6;">
+    <div style="
+        background:#e9ecef;
+        font-weight:700;
+        padding:6px 8px;
+        border-bottom:1px solid #c9cfd6;
+        text-align:center;
+        letter-spacing:.3px;
+    ">
+        ENSAYOS COTIZADOS
+    </div>
+
+    <table style="border: none; width:100%; border-collapse:collapse;">
+        <thead>
+        <tr>
+            <th class="center" style="width:34px;">ID</th>
+            <th style="width:160px;">Tecnología / denominación</th>
+            <th style="width:90px;">Código ensayo</th>
+            <th>Ensayo</th>
+            <th style="width:120px;">Método de ensayo</th>
+            <th class="center" style="width:45px;">ACR</th>
+            <th class="center" style="width:45px;">Cant</th>
+            <th class="right" style="width:95px;">Valor unitario</th>
+            <th class="right" style="width:95px;">Valor total</th>
+        </tr>
+        </thead>
+        <tbody>
+        {{TABLE_ROWS}}
+        </tbody>
+    </table>
+    </div>
+
+
+    <div class="totalsWrap">
+      <table class="totals">
+        <tr><td class="lbl2">Subtotal: $</td><td class="right">{{SUBTOTAL}}</td></tr>
+        <tr><td class="lbl2">Descuento: $</td><td class="right">{{DESCUENTO}}</td></tr>
+        <tr><td class="lbl2">IVA 19%:</td><td class="right">{{IVA}}</td></tr>
+        <tr><td class="lbl2">Total: $</td><td class="right"><b>{{TOTAL}}</b></td></tr>
+      </table>
+    </div>
+
+    <div style="padding:0; border:none;">
+        <div class="para" style="margin:0;"><b>Moneda:</b> {{MONEDA}}</div>
+        <div class="para" style="margin:0;"><b>ACR:</b> {{ACR_INFO}}</div>
+        <div class="para" style="margin:0;"><b>Observaciones:</b> {{OBSERVACIONES}}</div>
+    </div>
+
+
+  </div>
+</body>
+</html>

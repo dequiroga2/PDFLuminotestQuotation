@@ -1,0 +1,34 @@
+{
+  "cotNumber": "9687",
+  "organizacion": "ACUITY BRANDS",
+  "email": "contacto@acuity.com",
+  "direccion": "Calle 123 #45-67",
+  "telefono": "+57 300 123 4567",
+  "ciudad": "Bogotá",
+  "moneda": "COP",
+  "moneySymbol": "$",
+  "descuento": 0,
+  "ivaRate": 0.19,
+  "acrInfo": "ACR = Acreditado por ONAC (según alcance).",
+  "observaciones": "Vigencia 30 días.",
+  "items": [
+    {
+      "tecnologia": "Clavijas de uso doméstico y similares",
+      "codigoEnsayo": "ENS-002",
+      "ensayo": "Análisis dimensional",
+      "metodoEnsayo": "NTC/IEC XXXX",
+      "acr": true,
+      "cantidad": 2,
+      "valorUnitario": 50000
+    },
+    {
+      "tecnologia": "Baterías AAA",
+      "codigoEnsayo": "ENS-004",
+      "ensayo": "Aumento de temperatura",
+      "metodoEnsayo": "NTC/IEC YYYY",
+      "acr": false,
+      "cantidad": 1,
+      "valorUnitario": 75000
+    }
+  ]
+}
